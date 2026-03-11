@@ -1,0 +1,65 @@
+<h2 class="step-title">PASO 2: VALIDACIÓN DE DATOS</h2>
+<p class="step-desc">
+  Revise la vista previa de los datos importados. Las filas con errores están resaltadas
+  y deben corregirse antes de continuar.
+</p>
+
+<div class="stat-row">
+  <div class="stat-mini">
+    <div>
+      <span class="overline-label">TOTAL REGISTROS</span>
+      <div class="stat-mini__val">500</div>
+    </div>
+    <span class="material-symbols-outlined stat-mini__icon stat-mini__icon--blue">table_chart</span>
+  </div>
+  <div class="stat-mini stat-mini--green">
+    <div>
+      <span class="overline-label">REGISTROS VÁLIDOS</span>
+      <div class="stat-mini__val stat-mini__val--green">482</div>
+    </div>
+    <span class="material-symbols-outlined stat-mini__icon stat-mini__icon--green">check_circle</span>
+  </div>
+  <div class="stat-mini stat-mini--red">
+    <div>
+      <span class="overline-label">ERRORES ENCONTRADOS</span>
+      <div class="stat-mini__val stat-mini__val--red">18</div>
+    </div>
+    <span class="material-symbols-outlined stat-mini__icon stat-mini__icon--red">timer</span>
+  </div>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>CÓDIGO VISUAL</th>
+      <th>CÓDIGO ELECTRÓNICO</th>
+      <th>TIPO</th>
+      <th>HORA ALARMA</th>
+      <th>FECHA NAC.</th>
+      <th>ESTADO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of mockRows" [class.row--error]="row.isError">
+      <td [class.num-error]="row.isError">{{row.num}}</td>
+      <td><strong>{{row.codVisual}}</strong></td>
+      <td [class.cell-error]="row.isError && row.codElectronico === 'Vacío'">{{row.codElectronico}}</td>
+      <td [class.cell-error]="row.isError && row.tipo === 'Desconocido'">{{row.tipo}}</td>
+      <td [class.cell-error]="row.hora === 'X'">{{row.hora}}</td>
+      <td>{{row.fechaNac}}</td>
+      <td>
+        <span class="estado-badge"
+              [class.estado-badge--valid]="!row.isError"
+              [class.estado-badge--error]="row.isError">
+          {{row.estado}}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="table-note">
+  ℹ Mostrando 6 de 500 registros. Corrija los errores en su archivo fuente
+  y vuelva al paso anterior para cargar nuevamente.
+</p>
