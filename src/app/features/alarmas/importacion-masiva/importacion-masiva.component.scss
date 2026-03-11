@@ -1,0 +1,80 @@
+:host { display: block; width: 100%; }
+.importar { width: 100%; position: relative; }
+
+/* Success overlay */
+.success-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+}
+.success-box {
+  background: #fff; border-radius: 16px; padding: 40px;
+  text-align: center; box-shadow: var(--shadow-md);
+  .success-icon { font-size: 48px; display: block; margin-bottom: 12px; color: var(--color-primary); }
+  h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 8px; }
+  p  { color: var(--color-text-muted); font-size: 14px; }
+}
+
+/* Top bar */
+.page-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 4px;
+}
+
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+.breadcrumb__icon    { font-size: 16px; color: var(--color-text-muted); }
+.breadcrumb__link    {
+  background: none; border: none; cursor: pointer;
+  color: var(--color-text-muted); font-size: 13px; font-family: 'Inter', sans-serif;
+  &:hover { color: var(--color-primary); }
+}
+.breadcrumb__sep     { color: var(--color-text-muted); }
+.breadcrumb__current { font-weight: 700; color: var(--color-text); }
+
+.page-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Card & step layout */
+.step-card { padding: 0; overflow: hidden; }
+.step-card > app-step-indicator { display: block; padding: 0 28px; border-bottom: 1px solid var(--color-border); }
+.step-content { padding: 28px; padding-top: 8px; }
+
+/* Footer */
+.step-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 28px;
+  background: #F9FAFB;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+.footer-left  { min-width: 140px; }
+.footer-right {
+  display: flex; align-items: center; gap: 12px;
+  .material-symbols-outlined { font-size: 18px; }
+}
+
+.download-link {
+  font-size: 13px; font-weight: 600;
+  color: var(--color-text); text-decoration: underline; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  &:hover { color: var(--color-primary); }
+}
+
+.btn--next {
+  background: var(--color-secondary-100);
+  color: #fff; border: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  .material-symbols-outlined { font-size: 18px; }
+  &:hover { background: #1C3A9E; }
+  &:disabled {
+    background: #E5E7EB; color: #6B7280;
+    opacity: 1; cursor: not-allowed; pointer-events: none;
+  }
+}

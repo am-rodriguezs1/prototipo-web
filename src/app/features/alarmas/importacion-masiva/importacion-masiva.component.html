@@ -1,0 +1,65 @@
+<div class="importar">
+  <!-- Success overlay -->
+  <div class="success-overlay" *ngIf="showSuccess">
+    <div class="success-box">
+      <span class="success-icon">&#10003;</span>
+      <h3>¡Importación iniciada!</h3>
+      <p>482 alarmas han sido programadas correctamente.</p>
+    </div>
+  </div>
+
+  <!-- Breadcrumb + cancelar -->
+  <div class="page-topbar">
+    <nav class="breadcrumb">
+      <span class="material-symbols-outlined breadcrumb__icon">notifications_active</span>
+      <button class="breadcrumb__link" (click)="cancelar()">Gestor Alarmas</button>
+      <span class="breadcrumb__sep">/</span>
+      <span class="breadcrumb__current">Importación Masiva</span>
+    </nav>
+    <button *ngIf="currentStep >= 2" class="btn btn--danger" (click)="cancelar()">Cancelar</button>
+  </div>
+
+  <h1 class="page-title">Importación Masiva de Alarmas</h1>
+
+  <div class="card step-card">
+    <app-step-indicator [steps]="steps" [currentStep]="currentStep"></app-step-indicator>
+
+    <div class="step-content">
+      <app-step1-cargar
+        *ngIf="currentStep === 1"
+        (archivoSeleccionado)="onArchivoSeleccionado($event)">
+      </app-step1-cargar>
+
+      <app-step2-validacion
+        *ngIf="currentStep === 2"
+        [mockRows]="mockRows">
+      </app-step2-validacion>
+
+      <app-step3-confirmacion
+        *ngIf="currentStep === 3">
+      </app-step3-confirmacion>
+    </div>
+
+    <!-- Footer inside card -->
+    <div class="step-footer">
+      <div class="footer-left">
+        <button *ngIf="currentStep > 1" class="btn btn--outline" (click)="back()">
+          <span class="material-symbols-outlined">arrow_back</span> Atrás: Cargar
+        </button>
+      </div>
+      <div class="footer-right">
+        <a *ngIf="currentStep === 2" class="download-link" href="#">Descargar reporte de errores</a>
+        <button *ngIf="currentStep === 1" class="btn btn--next"
+                [disabled]="!fileSelected" (click)="next()">
+          SIGUIENTE: VALIDAR <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+        <button *ngIf="currentStep === 2" class="btn btn--next" (click)="next()">
+          SIGUIENTE: CONFIRMAR <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+        <button *ngIf="currentStep === 3" class="btn btn--next" (click)="iniciar()">
+          SIGUIENTE: INICIAR <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
