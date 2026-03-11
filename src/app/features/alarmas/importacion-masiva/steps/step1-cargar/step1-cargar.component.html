@@ -1,0 +1,29 @@
+<h2 class="step-title">PASO 1: SUBIR ARCHIVO</h2>
+
+<p class="step-desc">1. Descarga la plantilla oficial (obligatorio para evitar errores):</p>
+<div class="template-box">
+  <span class="material-symbols-outlined">description</span>
+  <span>Plantilla_Alarma.xlsx</span>
+  <button class="link-green">
+    <span class="material-symbols-outlined">download</span> Descargar
+  </button>
+</div>
+
+<p class="step-desc mt-16">2. Sube tu archivo diligenciado:</p>
+<div class="dropzone"
+     [class.dropzone--active]="isDragOver"
+     [class.dropzone--filled]="fileSelected"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave()"
+     (drop)="onDrop($event)"
+     (click)="fileInput.click()">
+  <input #fileInput type="file" accept=".csv,.xlsx" style="display:none" (change)="onFileInput($event)">
+  <span class="material-symbols-outlined dropzone__icon">cloud_upload</span>
+  <p *ngIf="!fileSelected" class="dropzone__text">
+    [ ARRASTRA TU ARCHIVO AQUÍ O <span class="dropzone__link">HAZ CLIC</span> ]
+  </p>
+  <p *ngIf="fileSelected" class="dropzone__file">
+    <span class="material-symbols-outlined">check_circle</span> {{fileName}}
+  </p>
+  <p class="dropzone__hint">Formatos: .CSV o .XLSX (Máx 500 filas)</p>
+</div>
