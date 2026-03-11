@@ -1,0 +1,21 @@
+<aside class="sidebar">
+  <div class="sidebar__logo">
+    <div class="logo-icon">V</div>
+    <span class="logo-text">VetCue</span>
+  </div>
+
+  <nav class="sidebar__nav">
+    <a *ngFor="let item of navItems"
+       [routerLink]="item.route"
+       routerLinkActive="active"
+       class="sidebar__link">
+      <span class="material-symbols-outlined sidebar__link-icon">{{item.icon}}</span>
+      <span>{{item.label}}</span>
+    </a>
+  </nav>
+
+  <button class="sidebar__logout" (click)="auth.logout()">
+    <span class="material-symbols-outlined">logout</span>
+    <span>Cerrar Sesión</span>
+  </button>
+</aside>
