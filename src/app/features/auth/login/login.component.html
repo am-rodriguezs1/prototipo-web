@@ -1,0 +1,69 @@
+<div class="login-page">
+  <div class="login-card">
+    <!-- Left panel -->
+    <div class="login-card__left">
+      <div class="login-card__overlay"></div>
+      <div class="login-card__brand">
+        <div class="brand-icon">V</div>
+        <span class="brand-name">Vet Cue</span>
+      </div>
+      <div class="login-card__hero">
+        <h2 class="hero-title">Gestión Ganadera Inteligente</h2>
+        <p class="hero-sub">Controla alarmas, inventario y reproducción de forma eficiente en un solo lugar.</p>
+      </div>
+      <p class="login-card__footer">© 2026 | Política de Privacidad</p>
+    </div>
+
+    <!-- Right panel -->
+    <div class="login-card__right">
+      <h1 class="login-title">Bienvenido de nuevo</h1>
+      <p class="login-sub">Por favor, ingresa tus datos para acceder.</p>
+
+      <form (ngSubmit)="onLogin()" class="login-form">
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <div class="input-wrapper">
+            <span class="input-icon material-symbols-outlined">mail</span>
+            <input type="email" class="form-control input-with-icon"
+                   [class.input--error]="submitted && !email"
+                   placeholder="usuario@ejemplo.com"
+                   [(ngModel)]="email" name="email">
+          </div>
+          <span class="field-error" *ngIf="submitted && !email">El correo electrónico es obligatorio.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon material-symbols-outlined">lock</span>
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control input-with-icon"
+                   [class.input--error]="submitted && !password"
+                   placeholder="••••••••"
+                   [(ngModel)]="password" name="password">
+            <button type="button" class="toggle-pw" (click)="showPassword = !showPassword">
+              <span class="material-symbols-outlined">{{showPassword ? 'visibility_off' : 'visibility'}}</span>
+            </button>
+          </div>
+          <span class="field-error" *ngIf="submitted && !password">La contraseña es obligatoria.</span>
+        </div>
+
+        <div class="login-row">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="remember" name="remember">
+            <span>Recordarme</span>
+          </label>
+          <a href="#" class="link-green">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn btn--primary login-btn">
+          INICIAR SESIÓN
+        </button>
+      </form>
+
+      <div class="login-register">
+        <span>¿No tienes una cuenta?</span>
+        <a href="#" class="link-green"> Regístrate ahora</a>
+      </div>
+    </div>
+  </div>
+</div>

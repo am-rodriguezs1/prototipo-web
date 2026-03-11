@@ -1,0 +1,191 @@
+.login-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-card {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-height: 520px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.login-card__left {
+  flex: 1;
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=800&q=80') center/cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  min-height: 400px;
+}
+
+.login-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(17,188,85,0.55), rgba(21,43,114,0.65));
+  z-index: 0;
+}
+
+.login-card__brand,
+.login-card__hero,
+.login-card__footer {
+  position: relative;
+  z-index: 1;
+}
+
+.login-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 36px; height: 36px;
+  background: var(--color-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  font-size: 18px;
+}
+
+.brand-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  font-size: 18px;
+}
+
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+}
+
+.login-card__footer {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.login-card__right {
+  flex: 1;
+  background: #fff;
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.login-sub {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+}
+
+.login-form { display: flex; flex-direction: column; gap: 18px; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.input-wrapper { position: relative; }
+
+.input-icon {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--color-text-muted);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.input-with-icon { padding-left: 38px; }
+
+.input--error { border-color: var(--color-danger-100) !important; }
+
+.field-error {
+  font-size: 12px;
+  color: var(--color-danger-100);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  color: var(--color-text-muted);
+  display: flex; align-items: center;
+  padding: 2px;
+  .material-symbols-outlined { font-size: 18px; }
+  &:hover { color: var(--color-text); }
+}
+
+.login-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.link-green {
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: var(--border-radius);
+  margin-top: 4px;
+}
+
+.login-register {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
