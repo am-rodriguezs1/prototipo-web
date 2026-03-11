@@ -1,0 +1,146 @@
+<div class="dashboard">
+  <div class="page-header">
+    <h1 class="page-title">Panel de Control</h1>
+    <p class="page-sub">Bienvenido de nuevo, aquí está el resumen de hoy.</p>
+  </div>
+
+  <div class="dashboard__grid">
+
+    <!-- KPI cards — 1 celda cada una -->
+    <app-stat-card
+      overline="TOTAL GANADO"
+      value="1,248"
+      sub="12%"
+      subMuted="vs Mes pasado"
+      icon="grass"
+      iconColor="blue"
+      subColor="green">
+    </app-stat-card>
+
+    <app-stat-card
+      overline="ALERTAS ACTIVAS"
+      value="05"
+      sub="2"
+      subMuted="Nuevo desde ayer"
+      icon="warning"
+      iconColor="red"
+      subColor="red">
+    </app-stat-card>
+
+    <app-stat-card
+      overline="AUMENTO DE PESO"
+      value="145 kg"
+      sub="En Objetivo"
+      subMuted="Objetivo"
+      icon="scale"
+      iconColor="green"
+      subColor="green">
+    </app-stat-card>
+
+    <!-- Alarmas — ocupa las 2 primeras columnas -->
+    <div class="card alarms-card">
+      <div class="alarms-card__header">
+        <div class="alarms-card__title">
+          <span class="material-symbols-outlined">calendar_today</span>
+          <h2>Alarmas</h2>
+        </div>
+        <button class="link-btn" (click)="navigate('/app/alarmas')">
+          Ver Calendario <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <div class="alarm-list">
+        <div class="alarm-item" *ngFor="let alarm of todayAlarms">
+          <div class="alarm-item__time-box" [ngClass]="getTimeBoxClass(alarm.status)">
+            <span class="time-label">HOY</span>
+            <span class="time-val">{{alarm.time}}</span>
+          </div>
+          <div class="alarm-item__info">
+            <span class="alarm-title">{{alarm.title}}</span>
+            <div class="alarm-item__meta">
+              <app-badge [label]="alarm.status" [type]="getStatusType(alarm.status)"></app-badge>
+              <span class="alarm-assignee" *ngIf="alarm.assignee">
+                <span class="material-symbols-outlined">person</span> {{alarm.assignee}}
+              </span>
+            </div>
+          </div>
+          <button class="btn btn--outline alarm-action"
+                  [class.alarm-action--prepare]="alarm.status === 'PROGRAMADO'"
+                  (click)="navigate('/app/alarmas')">
+            {{alarm.status === 'COMPLETO' ? 'Reporte' : alarm.status === 'PROGRAMADO' ? 'Preparar' : 'Detalle'}}
+          </button>
+        </div>
+      </div>
+
+      <div class="alarms-card__footer">
+        <button class="link-all-btn" (click)="navigate('/app/alarmas')">
+          VER TODAS LAS ALERTAS
+        </button>
+      </div>
+    </div>
+
+    <!-- Columna derecha — alineada con 3ª KPI -->
+    <div class="dashboard__side">
+
+      <!-- Quick access -->
+      <div class="quick-access">
+        <div class="section-title">
+          <span class="material-symbols-outlined">bolt</span>
+          <h3>Acceso Rápido</h3>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-btn" (click)="navigate('/app/alarmas/nueva')">
+            <div class="quick-icon-wrap">
+              <span class="material-symbols-outlined">add_circle</span>
+            </div>
+            <span>Nueva Alarma</span>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon-wrap">
+              <span class="material-symbols-outlined">description</span>
+            </div>
+            <span>Reporte Diario</span>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon-wrap">
+              <span class="material-symbols-outlined">pets</span>
+            </div>
+            <span>Nuevo Bovino</span>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon-wrap">
+              <span class="material-symbols-outlined">inventory</span>
+            </div>
+            <span>Lotes</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="suggestions">
+        <div class="section-title">
+          <span class="material-symbols-outlined">tips_and_updates</span>
+          <h3>Sugerencias</h3>
+        </div>
+        <div class="suggestion-list">
+          <div class="suggestion-card">
+            <span class="material-symbols-outlined suggestion-icon suggestion-icon--yellow">lightbulb</span>
+            <div>
+              <p class="suggestion-title">Optimizar Panel de control</p>
+              <p class="suggestion-desc">Basado en la reciente carga de datos, puede optimizar su panel de control.</p>
+              <a href="#" class="link-green-sm">Revisar Sugerencia</a>
+            </div>
+          </div>
+          <div class="suggestion-card">
+            <span class="material-symbols-outlined suggestion-icon suggestion-icon--blue">cloud</span>
+            <div>
+              <p class="suggestion-title">Alertas de Clima</p>
+              <p class="suggestion-desc">Posible lluvia el día de mañana</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
