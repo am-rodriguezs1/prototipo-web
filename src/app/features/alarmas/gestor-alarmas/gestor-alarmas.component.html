@@ -1,0 +1,167 @@
+<div class="gestor">
+  <!-- Page header -->
+  <div class="gestor__header">
+    <div>
+      <h1 class="page-title">Gestor de Alarmas</h1>
+      <p class="page-sub">Administra y programa alarmas médicas, nutricionales y de manejo.</p>
+    </div>
+    <div class="gestor__actions">
+      <button class="btn btn--import" (click)="router.navigate(['/app/alarmas/importar'])">
+        <span class="material-symbols-outlined">download</span> Importación Masiva
+      </button>
+      <button class="btn btn--new-alarm" (click)="router.navigate(['/app/alarmas/nueva'])">
+        <span class="material-symbols-outlined">add_alarm</span> Nueva Alarma
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs & filters -->
+  <div class="gestor__toolbar">
+    <div class="tabs">
+      <span class="tabs-label">Ver:</span>
+      <button class="tab" [class.tab--active]="activeTab==='todos'" (click)="activeTab='todos'">Todos</button>
+      <button class="tab" [class.tab--active]="activeTab==='pendientes'" (click)="activeTab='pendientes'">Pendientes</button>
+      <button class="tab" [class.tab--active]="activeTab==='completados'" (click)="activeTab='completados'">Completados</button>
+    </div>
+    <div class="filters">
+      <button class="filter-btn"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle">tune</span> Filtrar por Tipo</button>
+      <span class="filter-sep">|</span>
+      <button class="filter-btn"><span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle">tune</span> Filtrar por Bovino</button>
+    </div>
+  </div>
+
+  <!-- Calendar + Alarm panel -->
+  <div class="gestor__body">
+    <!-- Calendar -->
+    <div class="card calendar">
+      <!-- Calendar header: gray bg -->
+      <div class="calendar__header">
+        <h2 class="calendar__title">
+          <span class="material-symbols-outlined">calendar_month</span>
+          Octubre 2026
+        </h2>
+        <div class="calendar__nav-group">
+          <button class="nav-btn"><span class="material-symbols-outlined">chevron_left</span></button>
+          <button class="today-btn">Hoy</button>
+          <button class="nav-btn"><span class="material-symbols-outlined">chevron_right</span></button>
+        </div>
+      </div>
+
+      <div class="calendar__body">
+        <!-- Day headers -->
+        <div class="calendar__grid">
+          <div class="cal-header" *ngFor="let d of dayNames">{{d}}</div>
+
+          <!-- Weeks -->
+          <ng-container *ngFor="let week of calendar">
+            <ng-container *ngFor="let day of week">
+              <!-- Out-of-month: empty styled cell -->
+              <div class="cal-day cal-day--out" *ngIf="day === null"></div>
+
+              <!-- In-month days -->
+              <div class="cal-day"
+                   *ngIf="day !== null"
+                   [class.cal-day--selected]="day === selectedDay"
+                   (click)="selectDay(day)">
+                <span class="cal-day__num" [class.cal-day__num--today]="day === 10 && day !== selectedDay">{{day}}</span>
+
+                <!-- Selected day: event pills -->
+                <ng-container *ngIf="day === selectedDay">
+                  <div class="cal-event-pill cal-event-pill--blue">SANIT...</div>
+                  <div class="cal-event-pill cal-event-pill--red">URGE...</div>
+                </ng-container>
+
+                <!-- Other days with events: dots at bottom -->
+                <div class="cal-dots" *ngIf="day !== selectedDay && hasDots(day)">
+                  <span class="cal-dot" *ngFor="let dot of getDots(day)"
+                        [class.cal-dot--primary]="dot === 'primary'"
+                        [class.cal-dot--danger]="dot === 'danger'"></span>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alarm panel -->
+    <div class="alarm-panel">
+      <!-- Panel header: gray bg -->
+      <div class="alarm-panel__header">
+        <h3 class="alarm-panel__title">Alarmas del {{selectedDay}} de Octubre</h3>
+        <p class="alarm-panel__count">{{selectedDayAlarms.length}} Eventos programados</p>
+      </div>
+
+      <!-- Alarm cards -->
+      <div class="alarm-panel__list">
+        <div class="alarm-card" *ngFor="let alarm of selectedDayAlarms"
+             [class.alarm-card--blue]="alarm.type === 'SANITARIA'"
+             [class.alarm-card--red]="alarm.status === 'CRÍTICA'"
+             [class.alarm-card--green]="alarm.type === 'NUTRICIÓN'">
+          <div class="alarm-card__top">
+            <app-badge [label]="alarm.type" [type]="getBadgeType(alarm.type)"></app-badge>
+            <button class="icon-btn">
+              <span class="material-symbols-outlined">more_horiz</span>
+            </button>
+          </div>
+          <h4 class="alarm-card__title">
+            {{alarm.title}}
+            <span class="alarm-card__critical" *ngIf="alarm.status === 'CRÍTICA'">(CRÍTICA)</span>
+          </h4>
+          <div class="alarm-card__meta">
+            <div class="alarm-card__meta-row">
+              <span class="material-symbols-outlined">access_time</span>
+              <span>{{alarm.time}}</span>
+            </div>
+            <div class="alarm-card__meta-row">
+              <span class="material-symbols-outlined">{{ alarm.assignee ? 'person' : (alarm.type === 'SANITARIA' ? 'pets' : 'location_on') }}</span>
+              <span>{{ alarm.assignee ? 'Encargado: ' + alarm.assignee : alarm.location }}</span>
+            </div>
+          </div>
+          <div class="alarm-card__actions">
+            <ng-container *ngIf="alarm.status === 'CRÍTICA'">
+              <button class="alarm-card__btn alarm-card__btn--posponer">POSPONER</button>
+              <button class="alarm-card__btn alarm-card__btn--completar">COMPLETAR</button>
+            </ng-container>
+            <ng-container *ngIf="alarm.status !== 'CRÍTICA'">
+              <button class="alarm-card__link">VER DETALLE</button>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="alarm-panel__empty" *ngIf="selectedDayAlarms.length === 0">
+          <p>No hay alarmas para este día</p>
+        </div>
+      </div>
+
+      <!-- Panel footer pagination -->
+      <div class="alarm-panel__footer">
+        <button class="pag-btn">
+          <span class="material-symbols-outlined">arrow_back</span> Anterior
+        </button>
+        <span class="pag-info">Página 1 de 1</span>
+        <button class="pag-btn">
+          Siguiente <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next 7 days -->
+  <div class="card week-ahead">
+    <div class="week-ahead__title">
+      <span class="material-symbols-outlined week-ahead__icon">upcoming</span>
+      <h3>Próximos 7 días</h3>
+    </div>
+    <div class="week-grid">
+      <div class="week-item" *ngFor="let item of mockData.weekAhead"
+           [class.week-item--free]="item.count === -1">
+        <span class="week-day">{{item.label}}</span>
+        <span class="week-count" [class.week-count--zero]="item.count === 0">
+          {{item.count === -1 ? '--' : item.count}}
+        </span>
+        <span class="week-label">{{item.count === -1 ? 'Libre' : 'Alarmas'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
