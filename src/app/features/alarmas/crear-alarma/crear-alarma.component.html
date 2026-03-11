@@ -1,0 +1,149 @@
+<div class="crear">
+
+  <!-- Toast -->
+  <div class="toast" *ngIf="showToast">
+    <span class="material-symbols-outlined">check_circle</span> Alarma guardada correctamente
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <span class="material-symbols-outlined breadcrumb__icon">notifications_active</span>
+    <a class="breadcrumb__link" (click)="cancelar()">Gestor Alarmas</a>
+    <span class="breadcrumb__sep">/</span>
+    <span class="breadcrumb__current">Crear Alarma</span>
+  </nav>
+
+  <!-- Main card -->
+  <div class="card crear__card">
+
+    <!-- Card header -->
+    <div class="crear__card-header">
+      <h2 class="crear__card-title">PROGRAMAR NUEVA ALARMA</h2>
+    </div>
+
+    <!-- Form body -->
+    <div class="crear__body">
+      <form>
+
+        <!-- ── 1. Tipo de Actividad ── -->
+        <div class="form-section">
+          <h3 class="section-title">1. Tipo de Actividad</h3>
+          <div class="tipo-grid">
+            <label class="tipo-card" *ngFor="let t of tipos"
+                   [class.tipo-card--active]="tipoSeleccionado === t.label">
+              <input type="radio" name="tipo" [value]="t.label"
+                     [(ngModel)]="tipoSeleccionado" class="sr-only">
+              <span class="material-symbols-outlined tipo-card__icon"
+                    [class.tipo-card__icon--repro]="t.label === 'Reproducción' && tipoSeleccionado === 'Reproducción'">
+                {{t.icon}}
+              </span>
+              <span class="tipo-card__label">{{t.label}}</span>
+            </label>
+          </div>
+          <p class="form-hint">(Al seleccionar 'Reproducción', el icono cambia a un corazón rosa para fácil identificación)</p>
+        </div>
+
+        <!-- ── 2. Detalles Básicos ── -->
+        <div class="form-section">
+          <h3 class="section-title">2. Detalles Básicos</h3>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Título / Procedimiento</label>
+              <input type="text" class="form-control"
+                     placeholder="Ej. Inseminación Artificial - Celo Detectado..."
+                     [(ngModel)]="titulo" name="titulo">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sonido de Notificación</label>
+              <div class="input-addon">
+                <select class="form-control" [(ngModel)]="sonido" name="sonido">
+                  <option>Alerta Clásica</option>
+                  <option>Mugido Largo</option>
+                  <option>Campana de Granja</option>
+                </select>
+                <button type="button" class="addon-btn">
+                  <span class="material-symbols-outlined">play_arrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 3. ¿A quién aplica? ── -->
+        <div class="form-section">
+          <h3 class="section-title">3. ¿A quién aplica?</h3>
+          <div class="form-row-2">
+            <div class="aplica-box" [class.aplica-box--active]="aplicaA === 'individual'">
+              <label class="aplica-radio-label">
+                <input type="radio" name="aplica" value="individual" [(ngModel)]="aplicaA">
+                <span>Individual</span>
+              </label>
+              <div class="input-search">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" class="form-control" placeholder="Buscar ID (#405)..."
+                       [(ngModel)]="buscarId" name="buscarId">
+              </div>
+              <p class="form-hint">(Al seleccionar, el animal se añade a una lista temporal)</p>
+            </div>
+            <div class="aplica-box" [class.aplica-box--active]="aplicaA === 'grupo'">
+              <label class="aplica-radio-label">
+                <input type="radio" name="aplica" value="grupo" [(ngModel)]="aplicaA">
+                <span>Grupo</span>
+              </label>
+              <select class="form-control" [(ngModel)]="lote" name="lote">
+                <option value="">Seleccionar Lote o Corral...</option>
+                <option>Lote A - Lactancia</option>
+                <option>Corral 3 - Cuarentena</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 4. Cronograma ── -->
+        <div class="form-section">
+          <h3 class="section-title">4. Cronograma</h3>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Fecha</label>
+              <input type="date" class="form-control" [(ngModel)]="fecha" name="fecha">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hora</label>
+              <input type="time" class="form-control" [(ngModel)]="hora" name="hora">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Repetición / Reiteración</label>
+              <select class="form-control" [(ngModel)]="repeticion" name="repeticion">
+                <option>Solo una vez</option>
+                <option>Diariamente</option>
+                <option>Semanalmente</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="warning-banner">
+            <span class="material-symbols-outlined warning-banner__icon">warning</span>
+            <div>
+              <p class="warning-banner__title">¡Advertencia de Conflicto!</p>
+              <p class="warning-banner__desc">Ya tienes <strong>12 tareas</strong> asignadas a este rango horario (09:00 - 10:00). Considera moverla para las 14:00.</p>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Card footer -->
+    <div class="crear__footer">
+      <button type="button" class="btn btn--outline" (click)="cancelar()">Cancelar</button>
+      <div class="footer__right">
+        <button type="button" class="btn btn--primary footer__save-btn" (click)="guardar()">
+          <span class="material-symbols-outlined">save</span>
+          GUARDAR ALARMA
+        </button>
+        <p class="footer__hint">(Al hacer click, el sistema notifica a la app móvil en 2s)</p>
+      </div>
+    </div>
+
+  </div>
+</div>
