@@ -9,7 +9,7 @@ Prototipo funcional desarrollado en **Angular** como entrega final para la mater
 | Nombre |
 |---|
 | Juan Camilo Acevedo Ospina |
-| Mauricio Rodriguez |
+| Alex Mauricio Rodriguez Sanchez |
 
 ---
 
